@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TODO App</string>
+    <string name="login_email">Email</string>
+    <string name="login_password">Password</string>
+    <string name="login_btn_text">Login</string>
+    <string name="floating_action_button">Floating Action Button</string>
+    <string name="all_tasks_tab">All</string>
+    <string name="completed_tab">Completed</string>
+    <string name="add_task_title">Title</string>
+    <string name="add_task_detail">Detail</string>
+    <string name="add_task_button">Add</string>
+    <string name="update_task_button">Update</string>
+    <string name="cancel_update_task_button">Cancel</string>
+</resources>

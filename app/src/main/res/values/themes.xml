@@ -1,0 +1,33 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.ToDoApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimaryDark">@color/light_primary</item>
+        <item name="colorPrimary">@color/light_primary</item>
+    </style>
+    
+    <style name="edit_text_theme">
+        <item name="android:textColor">@color/light_edit_text</item>
+        <item name="android:backgroundTint">@color/light_edit_text</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="toolbar_content_theme">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="button_theme">
+        <item name="android:backgroundTint">@color/light_primary</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="bottom_nav_theme">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/light_edit_text</item>
+    </style>
+
+    <style name="floating_action_shape">
+        <item name="cornerSize">50%</item>
+    </style>
+    <style name="Theme.ToDoApp" parent="Base.Theme.ToDoApp" />
+</resources>

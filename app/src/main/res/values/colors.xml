@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="light_primary">#9395D3</color>
+    <color name="light_icon">#B3B7EE</color>
+    <color name="light_edit_text">#8B8787</color>
+    <color name="completed_task_card">#8BC34A</color>
+</resources>
