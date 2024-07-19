@@ -12,6 +12,10 @@ class TaskRepository(private val taskDao: TaskDao) {
         return taskDao.getTaskById(id)
     }
 
+    fun getCompletedTasks(): LiveData<List<Task>> {
+        return taskDao.getCompletedTasks()
+    }
+
     suspend fun addTask(task: Task) {
         taskDao.addTask(task)
     }

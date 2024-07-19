@@ -11,27 +11,30 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp">
+        android:padding="20dp"
+        android:id="@+id/task_card_layout">
 
         <TextView
             android:id="@+id/task_title_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="TODO TITLE"
+            android:text="@string/task_title"
             app:layout_constraintBottom_toTopOf="@+id/task_subtitle_tv"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/barrier_task_card"/>
+            app:layout_constraintEnd_toStartOf="@id/barrier_task_card"
+            style="@style/task_title"/>
 
         <TextView
             android:id="@+id/task_subtitle_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="TODO SUB"
+            android:text="@string/task_sub_title"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/barrier_task_card"
-            app:layout_constraintTop_toBottomOf="@+id/task_title_tv" />
+            app:layout_constraintTop_toBottomOf="@+id/task_title_tv"
+            style="@style/task_subtitle"/>
 
         <ImageView
             android:id="@+id/edit_btn"

@@ -3,6 +3,7 @@ package com.example.todoapp
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
@@ -29,12 +30,8 @@ class EditTaskActivity : AppCompatActivity() {
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
 //            insets
 //        }
-        val toolbar: Toolbar = binding.toolbarEditTask.appToolbar
-        setSupportActionBar(toolbar)
-        toolbar.menu.clear()
-        toolbar.setNavigationOnClickListener {
-            finish()
-        }
+
+        editTaskToolbar()
 
         val dao = TaskDatabase.getDatabase(applicationContext).taskDao()
         val repository = TaskRepository(dao)
@@ -52,19 +49,40 @@ class EditTaskActivity : AppCompatActivity() {
         })
 
         binding.updateBtn.setOnClickListener {
-            val task =
-                Task(
-                    binding.editTaskTitle.text.toString(),
-                    binding.editTaskDetail.text.toString(),
-                    taskId
-                )
-            addTaskViewModel.editTask(task)
-            Toast.makeText(this, "Task Updated", Toast.LENGTH_SHORT).show()
-            finish()
+
+            AlertDialog.Builder(this).apply {
+                setTitle("Save Changes")
+                setMessage("Are you sure?")
+                setPositiveButton("Yes") { _, _ ->
+                    val task =
+                        Task(
+                            binding.editTaskTitle.text.toString(),
+                            binding.editTaskDetail.text.toString(),
+                            taskId
+                        )
+                    addTaskViewModel.editTask(task)
+                    Toast.makeText(this@EditTaskActivity, "Task Updated", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+                setNeutralButton("No") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                setCancelable(false)
+            }.show()
         }
 
         binding.cancelBtn.setOnClickListener {
             finish()
         }
+    }
+
+    private fun editTaskToolbar() {
+        val toolbar: Toolbar = binding.toolbarEditTask.appToolbar
+        setSupportActionBar(toolbar)
+        toolbar.menu.clear()
+        toolbar.setNavigationOnClickListener {
+            finish()
+        }
+        toolbar.title = "Edit Task"
     }
 }

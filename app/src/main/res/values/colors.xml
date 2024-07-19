@@ -5,5 +5,8 @@
     <color name="light_primary">#9395D3</color>
     <color name="light_icon">#B3B7EE</color>
     <color name="light_edit_text">#8B8787</color>
-    <color name="completed_task_card">#8BC34A</color>
+    <color name="completed_task_card">#409395D3</color>
+    <color name="card_icon_color">#B3B7EE</color>
+    <color name="light_grey">#59D1D1D1</color>
+    <color name="transparent_white">#80FFFFFF</color>
 </resources>

@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
@@ -41,6 +42,11 @@ class TasksActivity : AppCompatActivity(), TaskActionListener {
             startActivity(intent)
         }
 
+        binding.completedTasks.setOnClickListener {
+            val intent = Intent(this, CompletedTasksActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -54,6 +60,7 @@ class TasksActivity : AppCompatActivity(), TaskActionListener {
                 showCalendar()
                 return true
             }
+
             else -> return super.onOptionsItemSelected(item)
         }
     }
@@ -107,12 +114,34 @@ class TasksActivity : AppCompatActivity(), TaskActionListener {
     }
 
     override fun onDeleteClick(task: Task) {
-        addTaskViewModel.deleteTask(task)
+        AlertDialog.Builder(this).apply {
+            setTitle("Delete Task")
+            setMessage("Are you sure?")
+            setPositiveButton("Yes") { _, _ ->
+                addTaskViewModel.deleteTask(task)
+                Toast.makeText(this@TasksActivity, "Task Deleted", Toast.LENGTH_SHORT).show()
+            }
+            setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+            setCancelable(false)
+        }.show()
     }
 
     override fun onCompleteClick(task: Task) {
-        val updatedTask = task.copy(isCompleted = true) // Modify task as needed
-        addTaskViewModel.editTask(updatedTask)
+        AlertDialog.Builder(this).apply {
+            setTitle("Complete Task")
+            setMessage("Are you sure?")
+            setPositiveButton("Yes") { _, _ ->
+                val updatedTask = task.copy(isCompleted = true) // Modify task as needed
+                addTaskViewModel.editTask(updatedTask)
+                Toast.makeText(this@TasksActivity, "Task Completed", Toast.LENGTH_SHORT).show()
+            }
+            setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+            setCancelable(false)
+        }.show()
     }
 
 }

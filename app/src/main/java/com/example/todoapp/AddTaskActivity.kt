@@ -22,13 +22,8 @@ class AddTaskActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        val toolbar: Toolbar = binding.toolbarAddTask.appToolbar
-        setSupportActionBar(toolbar)
-        toolbar.menu.clear()
 
-        toolbar.setNavigationOnClickListener {
-            finish()
-        }
+        addTaskToolbar()
 
         val dao = TaskDatabase.getDatabase(applicationContext).taskDao()
         val repository = TaskRepository(dao)
@@ -44,5 +39,17 @@ class AddTaskActivity : AppCompatActivity() {
             Toast.makeText(this, "Task Added", Toast.LENGTH_SHORT).show()
             finish()
         }
+    }
+
+    private fun addTaskToolbar(){
+        val toolbar: Toolbar = binding.toolbarAddTask.appToolbar
+        setSupportActionBar(toolbar)
+        toolbar.menu.clear()
+
+        toolbar.setNavigationOnClickListener {
+            finish()
+        }
+
+        toolbar.title = "Add Task"
     }
 }

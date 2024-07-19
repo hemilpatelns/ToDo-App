@@ -26,6 +26,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:hint="@string/add_task_title"
+            android:inputType="textCapWords"
             style="@style/edit_text_theme"
             android:layout_marginHorizontal="10dp" />
 
@@ -36,6 +37,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/add_task_title"
             android:hint="@string/add_task_detail"
+            android:inputType="textCapSentences"
             style="@style/edit_text_theme"
             android:layout_marginHorizontal="10dp" />
 

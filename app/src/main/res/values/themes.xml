@@ -3,6 +3,7 @@
     <style name="Base.Theme.ToDoApp" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimaryDark">@color/light_primary</item>
         <item name="colorPrimary">@color/light_primary</item>
+        <item name="android:fontFamily">@font/jost_bold</item>
     </style>
     
     <style name="edit_text_theme">
@@ -22,8 +23,19 @@
     </style>
 
     <style name="bottom_nav_theme">
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/light_edit_text</item>
+        <item name="android:background">@color/transparent_white</item>
+    </style>
+
+    <style name="task_title">
+        <item name="android:textColor">@color/light_primary</item>
+        <item name="android:textSize">19sp</item>
+    </style>
+
+    <style name="task_subtitle">
+        <item name="android:fontFamily">@font/jost_medium</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
     <style name="floating_action_shape">

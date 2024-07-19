@@ -16,6 +16,10 @@ class AddTaskViewModel(private val taskRepository: TaskRepository): ViewModel() 
         return taskRepository.getTaskById(id)
     }
 
+    fun getCompletedTasks(): LiveData<List<Task>>{
+        return taskRepository.getCompletedTasks()
+    }
+
     fun addTask(task: Task){
         viewModelScope.launch(Dispatchers.IO){
             taskRepository.addTask(task)

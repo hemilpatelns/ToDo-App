@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <stroke
+        android:width="2dp"
+        android:color="@color/card_icon_color"/>
+
+    <solid
+        android:color="@color/completed_task_card"/>
+
+    <corners
+        android:radius="8dp"/>
+
+</shape>

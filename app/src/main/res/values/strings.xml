@@ -11,4 +11,6 @@
     <string name="add_task_button">Add</string>
     <string name="update_task_button">Update</string>
     <string name="cancel_update_task_button">Cancel</string>
+    <string name="task_title">TODO TITLE</string>
+    <string name="task_sub_title">TODO SUB TITLE</string>
 </resources>

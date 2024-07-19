@@ -17,6 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/light_grey"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -33,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:backgroundTint="@color/light_primary"
+            app:backgroundTint="@color/light_primary"
             android:contentDescription="@string/floating_action_button"
             android:src="@drawable/ic_add"
             app:layout_constraintBottom_toTopOf="@id/tasks_bottom_nav"
@@ -46,6 +47,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:theme="@style/bottom_nav_theme"
+            android:elevation="10dp"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
@@ -74,12 +76,6 @@
                 android:text="@string/completed_tab"
                 app:drawableTopCompat="@drawable/ic_completed" />
         </LinearLayout>
-        <!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
-        <!--            android:id="@+id/tasks_bottom_nav"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--            app:menu="@menu/menu_bottom_navigation"/>-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -3,18 +3,72 @@ package com.example.todoapp
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.todoapp.databinding.ActivityCompletedTasksBinding
 
 class CompletedTasksActivity : AppCompatActivity() {
+
+    private val binding: ActivityCompletedTasksBinding by lazy {
+        ActivityCompletedTasksBinding.inflate(layoutInflater)
+    }
+
+    private lateinit var completedTaskRecyclerView: RecyclerView
+    private lateinit var addTaskViewModel: AddTaskViewModel
+    private lateinit var completedTasksAdapter: CompletedTaskAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        enableEdgeToEdge()
-        setContentView(R.layout.activity_completed_tasks)
+        setContentView(binding.root)
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
 //            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
 //            insets
 //        }
+
+        completedTaskToolbar()
+
+        completedTaskDetails()
+
+    }
+
+    private fun completedTaskToolbar(){
+        val toolbar: Toolbar = binding.toolbarCompletedTask.appToolbar
+        setSupportActionBar(toolbar)
+
+        toolbar.menu.clear()
+
+        toolbar.setNavigationOnClickListener {
+            finish()
+        }
+
+        toolbar.title = "Completed Tasks"
+    }
+
+    private fun completedTaskDetails() {
+        completedTaskRecyclerView = binding.recyclerCompletedTasks
+        completedTaskRecyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        completedTasksAdapter = CompletedTaskAdapter()
+        completedTaskRecyclerView.adapter = completedTasksAdapter
+
+        val dao = TaskDatabase.getDatabase(applicationContext).taskDao()
+        val repository = TaskRepository(dao)
+        addTaskViewModel = ViewModelProvider(
+            this,
+            AddTaskViewModelFactory(repository)
+        )[AddTaskViewModel::class.java]
+
+        addTaskViewModel.getCompletedTasks().observe(this, Observer { tasks ->
+            tasks?.let {
+                completedTasksAdapter.setCompletedTasks(it)
+            }
+        })
     }
 }

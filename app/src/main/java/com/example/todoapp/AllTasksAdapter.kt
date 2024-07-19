@@ -18,9 +18,11 @@ interface TaskActionListener {
     fun onCompleteClick(task: Task)
 }
 
-class AllTasksAdapter(private val listener: TaskActionListener): RecyclerView.Adapter<AllTasksAdapter.TaskViewHolder>() {
+class AllTasksAdapter(private val listener: TaskActionListener) :
+    RecyclerView.Adapter<AllTasksAdapter.TaskViewHolder>() {
     private var tasks: List<Task> = emptyList()
-    class TaskViewHolder(itemView:View):ViewHolder(itemView) {
+
+    class TaskViewHolder(itemView: View) : ViewHolder(itemView) {
         val bind = LayoutCurrentTasksBinding.bind(itemView)
     }
 
@@ -40,18 +42,18 @@ class AllTasksAdapter(private val listener: TaskActionListener): RecyclerView.Ad
         notifyDataSetChanged()
     }
 
-    private val taskDiffCallback = object:DiffUtil.ItemCallback<Task>(){
-        override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
-            return oldItem == newItem
-        }
-
-    }
-
-    val taskDifferList = AsyncListDiffer(this, taskDiffCallback)
+//    private val taskDiffCallback = object : DiffUtil.ItemCallback<Task>() {
+//        override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
+//            return oldItem.id == newItem.id
+//        }
+//
+//        override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
+//            return oldItem == newItem
+//        }
+//
+//    }
+//
+//    val taskDifferList = AsyncListDiffer(this, taskDiffCallback)
 
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
@@ -60,10 +62,17 @@ class AllTasksAdapter(private val listener: TaskActionListener): RecyclerView.Ad
         holder.bind.taskSubtitleTv.text = task.taskSubtitle
 
         holder.bind.apply {
-            if(task.isCompleted){
+            if (task.isCompleted) {
                 holder.bind.editBtn.visibility = View.GONE
                 holder.bind.completeBtn.visibility = View.GONE
-                holder.bind.taskCard.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.completed_task_card))
+                holder.bind.taskCardLayout.background = ContextCompat.getDrawable(
+                    holder.itemView.context,
+                    R.drawable.background_completed_card
+                )
+            } else {
+                holder.bind.editBtn.visibility = View.VISIBLE
+                holder.bind.completeBtn.visibility = View.VISIBLE
+                holder.bind.taskCardLayout.background = null
             }
         }
 
