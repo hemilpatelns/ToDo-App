@@ -2,18 +2,14 @@ package com.example.todoapp
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.todoapp.databinding.ActivityAddTaskBinding
 
 class AddTaskActivity : AppCompatActivity() {
 
-    private lateinit var addTaskViewModel: AddTaskViewModel
+    private lateinit var taskViewModel: TaskViewModel
 
     private val binding: ActivityAddTaskBinding by lazy {
         ActivityAddTaskBinding.inflate(layoutInflater)
@@ -27,22 +23,22 @@ class AddTaskActivity : AppCompatActivity() {
 
         val dao = TaskDatabase.getDatabase(applicationContext).taskDao()
         val repository = TaskRepository(dao)
-        addTaskViewModel = ViewModelProvider(
+        taskViewModel = ViewModelProvider(
             this,
             AddTaskViewModelFactory(repository)
-        )[AddTaskViewModel::class.java]
+        )[TaskViewModel::class.java]
 
-        binding.addBtn.setOnClickListener {
+        binding.btnAdd.setOnClickListener {
             val task =
-                Task(binding.addTaskTitle.text.toString(), binding.addTaskDetail.text.toString())
-            addTaskViewModel.addTask(task)
+                Task(binding.etAddTaskTitle.text.toString(), binding.etAddTaskDetail.text.toString())
+            taskViewModel.addTask(task)
             Toast.makeText(this, "Task Added", Toast.LENGTH_SHORT).show()
             finish()
         }
     }
 
     private fun addTaskToolbar(){
-        val toolbar: Toolbar = binding.toolbarAddTask.appToolbar
+        val toolbar: Toolbar = binding.tbAddTask.tbApp
         setSupportActionBar(toolbar)
         toolbar.menu.clear()
 

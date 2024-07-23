@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModelProvider
 class AddTaskViewModelFactory(private val taskRepository: TaskRepository): ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(AddTaskViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(TaskViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return AddTaskViewModel(taskRepository) as T
+            return TaskViewModel(taskRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

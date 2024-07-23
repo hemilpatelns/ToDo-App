@@ -41,5 +41,11 @@
     <style name="floating_action_shape">
         <item name="cornerSize">50%</item>
     </style>
+
+    <style name="floating_action_theme">
+        <item name="shapeAppearanceOverlay">@style/floating_action_shape</item>
+        <item name="backgroundTint">@color/light_primary</item>
+        <item name="tint">@color/white</item>
+    </style>
     <style name="Theme.ToDoApp" parent="Base.Theme.ToDoApp" />
 </resources>

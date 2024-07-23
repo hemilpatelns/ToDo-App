@@ -2,19 +2,16 @@ package com.example.todoapp
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.todoapp.databinding.ActivityEditTaskBinding
 
 class EditTaskActivity : AppCompatActivity() {
 
-    private lateinit var addTaskViewModel: AddTaskViewModel
+    private lateinit var taskViewModel: TaskViewModel
     private var taskId: Int = 0
 
     private val binding: ActivityEditTaskBinding by lazy {
@@ -35,20 +32,20 @@ class EditTaskActivity : AppCompatActivity() {
 
         val dao = TaskDatabase.getDatabase(applicationContext).taskDao()
         val repository = TaskRepository(dao)
-        addTaskViewModel = ViewModelProvider(
+        taskViewModel = ViewModelProvider(
             this,
             AddTaskViewModelFactory(repository)
-        )[AddTaskViewModel::class.java]
+        )[TaskViewModel::class.java]
 
         taskId = intent.getIntExtra("id", 0)
-        addTaskViewModel.getTaskById(taskId).observe(this, Observer { task ->
+        taskViewModel.getTaskById(taskId).observe(this, Observer { task ->
             task?.let {
-                binding.editTaskTitle.setText(it.taskTitle)
-                binding.editTaskDetail.setText(it.taskSubtitle)
+                binding.etEditTaskTitle.setText(it.taskTitle)
+                binding.etEditTaskDetail.setText(it.taskSubtitle)
             }
         })
 
-        binding.updateBtn.setOnClickListener {
+        binding.btnUpdate.setOnClickListener {
 
             AlertDialog.Builder(this).apply {
                 setTitle("Save Changes")
@@ -56,11 +53,11 @@ class EditTaskActivity : AppCompatActivity() {
                 setPositiveButton("Yes") { _, _ ->
                     val task =
                         Task(
-                            binding.editTaskTitle.text.toString(),
-                            binding.editTaskDetail.text.toString(),
+                            binding.etEditTaskTitle.text.toString(),
+                            binding.etEditTaskDetail.text.toString(),
                             taskId
                         )
-                    addTaskViewModel.editTask(task)
+                    taskViewModel.editTask(task)
                     Toast.makeText(this@EditTaskActivity, "Task Updated", Toast.LENGTH_SHORT).show()
                     finish()
                 }
@@ -71,13 +68,13 @@ class EditTaskActivity : AppCompatActivity() {
             }.show()
         }
 
-        binding.cancelBtn.setOnClickListener {
+        binding.btnCancel.setOnClickListener {
             finish()
         }
     }
 
     private fun editTaskToolbar() {
-        val toolbar: Toolbar = binding.toolbarEditTask.appToolbar
+        val toolbar: Toolbar = binding.tbEditTask.tbApp
         setSupportActionBar(toolbar)
         toolbar.menu.clear()
         toolbar.setNavigationOnClickListener {

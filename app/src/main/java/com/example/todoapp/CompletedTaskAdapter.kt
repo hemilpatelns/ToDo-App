@@ -32,12 +32,12 @@ class CompletedTaskAdapter: RecyclerView.Adapter<CompletedTaskAdapter.CompletedT
 
     override fun onBindViewHolder(holder: CompletedTaskViewHolder, position: Int) {
         val task = completedTasks[position]
-        holder.bind.taskTitleTv.text = task.taskTitle
-        holder.bind.taskSubtitleTv.text = task.taskSubtitle
+        holder.bind.tvTaskTitle.text = task.taskTitle
+        holder.bind.tvTaskSubtitle.text = task.taskSubtitle
 
         holder.bind.apply {
-            holder.bind.editBtn.visibility = View.GONE
-            holder.bind.completeBtn.visibility = View.GONE
+            holder.bind.btnEdit.visibility = View.GONE
+            holder.bind.btnComplete.visibility = View.GONE
             holder.bind.taskCardLayout.background = ContextCompat.getDrawable(
                 holder.itemView.context,
                 R.drawable.background_completed_card

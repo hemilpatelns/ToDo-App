@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class AddTaskViewModel(private val taskRepository: TaskRepository): ViewModel() {
+class TaskViewModel(private val taskRepository: TaskRepository): ViewModel() {
 
     fun getTasks(): LiveData<List<Task>>{
         return taskRepository.getTasks()

@@ -1,7 +1,5 @@
 package com.example.todoapp
 
-import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +30,6 @@ class AllTasksAdapter(private val listener: TaskActionListener) :
         return TaskViewHolder(view)
     }
 
-
     override fun getItemCount(): Int {
         return tasks.size
     }
@@ -55,35 +52,35 @@ class AllTasksAdapter(private val listener: TaskActionListener) :
 //
 //    val taskDifferList = AsyncListDiffer(this, taskDiffCallback)
 
-
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val task = tasks[position]
-        holder.bind.taskTitleTv.text = task.taskTitle
-        holder.bind.taskSubtitleTv.text = task.taskSubtitle
+        holder.bind.tvTaskTitle.text = task.taskTitle
+        holder.bind.tvTaskSubtitle.text = task.taskSubtitle
 
         holder.bind.apply {
             if (task.isCompleted) {
-                holder.bind.editBtn.visibility = View.GONE
-                holder.bind.completeBtn.visibility = View.GONE
+                holder.bind.btnEdit.visibility = View.GONE
+                holder.bind.btnComplete.visibility = View.GONE
                 holder.bind.taskCardLayout.background = ContextCompat.getDrawable(
                     holder.itemView.context,
                     R.drawable.background_completed_card
                 )
             } else {
-                holder.bind.editBtn.visibility = View.VISIBLE
-                holder.bind.completeBtn.visibility = View.VISIBLE
+                holder.bind.btnEdit.visibility = View.VISIBLE
+                holder.bind.btnComplete.visibility = View.VISIBLE
                 holder.bind.taskCardLayout.background = null
             }
         }
 
-        holder.bind.editBtn.setOnClickListener {
+        holder.bind.btnEdit.setOnClickListener {
             listener.onEditClick(task)
         }
-        holder.bind.deleteBtn.setOnClickListener {
+
+        holder.bind.btnDelete.setOnClickListener {
             listener.onDeleteClick(task)
         }
 
-        holder.bind.completeBtn.setOnClickListener {
+        holder.bind.btnComplete.setOnClickListener {
             listener.onCompleteClick(task)
         }
     }

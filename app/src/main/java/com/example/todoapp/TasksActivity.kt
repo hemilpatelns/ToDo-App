@@ -6,7 +6,6 @@ import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -24,25 +23,25 @@ class TasksActivity : AppCompatActivity(), TaskActionListener {
     }
 
     private lateinit var tasksRecyclerView: RecyclerView
-    private lateinit var addTaskViewModel: AddTaskViewModel
+    private lateinit var taskViewModel: TaskViewModel
     private lateinit var allTasksAdapter: AllTasksAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        val toolbar: Toolbar = binding.toolbarTask.appToolbar
+        val toolbar: Toolbar = binding.tbTask.tbApp
         setSupportActionBar(toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
         taskDetails()
 
-        binding.addTaskFab.setOnClickListener {
+        binding.fabAddTask.setOnClickListener {
             val intent = Intent(this, AddTaskActivity::class.java)
             startActivity(intent)
         }
 
-        binding.completedTasks.setOnClickListener {
+        binding.opCompletedTasks.setOnClickListener {
             val intent = Intent(this, CompletedTasksActivity::class.java)
             startActivity(intent)
         }
@@ -87,7 +86,7 @@ class TasksActivity : AppCompatActivity(), TaskActionListener {
     }
 
     private fun taskDetails() {
-        tasksRecyclerView = binding.recyclerAllTasks
+        tasksRecyclerView = binding.rvAllTasks
         tasksRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         allTasksAdapter = AllTasksAdapter(this)
@@ -95,12 +94,12 @@ class TasksActivity : AppCompatActivity(), TaskActionListener {
 
         val dao = TaskDatabase.getDatabase(applicationContext).taskDao()
         val repository = TaskRepository(dao)
-        addTaskViewModel = ViewModelProvider(
+        taskViewModel = ViewModelProvider(
             this,
             AddTaskViewModelFactory(repository)
-        )[AddTaskViewModel::class.java]
+        )[TaskViewModel::class.java]
 
-        addTaskViewModel.getTasks().observe(this, Observer { tasks ->
+        taskViewModel.getTasks().observe(this, Observer { tasks ->
             tasks?.let {
                 allTasksAdapter.setTasks(it)
             }
@@ -118,7 +117,7 @@ class TasksActivity : AppCompatActivity(), TaskActionListener {
             setTitle("Delete Task")
             setMessage("Are you sure?")
             setPositiveButton("Yes") { _, _ ->
-                addTaskViewModel.deleteTask(task)
+                taskViewModel.deleteTask(task)
                 Toast.makeText(this@TasksActivity, "Task Deleted", Toast.LENGTH_SHORT).show()
             }
             setNegativeButton("No") { dialog, _ ->
@@ -133,8 +132,11 @@ class TasksActivity : AppCompatActivity(), TaskActionListener {
             setTitle("Complete Task")
             setMessage("Are you sure?")
             setPositiveButton("Yes") { _, _ ->
-                val updatedTask = task.copy(isCompleted = true) // Modify task as needed
-                addTaskViewModel.editTask(updatedTask)
+                val updatedTask = task.copy(
+                    isCompleted = true,
+                    taskCompletionTime = System.currentTimeMillis()
+                ) // Modify task as needed
+                taskViewModel.editTask(updatedTask)
                 Toast.makeText(this@TasksActivity, "Task Completed", Toast.LENGTH_SHORT).show()
             }
             setNegativeButton("No") { dialog, _ ->

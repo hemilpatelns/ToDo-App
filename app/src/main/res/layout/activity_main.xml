@@ -2,13 +2,13 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_coordinator_layout"
+    android:id="@+id/cdlLogin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
     <include
-        android:id="@+id/toolbar_main"
+        android:id="@+id/tbLogin"
         layout="@layout/layout_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <EditText
-            android:id="@+id/email_edit_text"
+            android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,23 +31,23 @@
             android:layout_marginHorizontal="10dp" />
 
         <EditText
-            android:id="@+id/password_edit_text"
+            android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/email_edit_text"
+            app:layout_constraintTop_toBottomOf="@id/etEmail"
             android:hint="@string/login_password"
             android:inputType="textPassword"
             style="@style/edit_text_theme"
             android:layout_marginHorizontal="10dp" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/login_btn"
+            android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/password_edit_text"
+            app:layout_constraintTop_toBottomOf="@id/etPassword"
             android:text="@string/login_btn_text"
             android:layout_marginTop="20dp"
             style="@style/button_theme"

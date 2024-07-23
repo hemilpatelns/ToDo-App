@@ -1,11 +1,8 @@
 package com.example.todoapp
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,7 +16,7 @@ class CompletedTasksActivity : AppCompatActivity() {
     }
 
     private lateinit var completedTaskRecyclerView: RecyclerView
-    private lateinit var addTaskViewModel: AddTaskViewModel
+    private lateinit var taskViewModel: TaskViewModel
     private lateinit var completedTasksAdapter: CompletedTaskAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +36,7 @@ class CompletedTasksActivity : AppCompatActivity() {
     }
 
     private fun completedTaskToolbar(){
-        val toolbar: Toolbar = binding.toolbarCompletedTask.appToolbar
+        val toolbar: Toolbar = binding.tbCompletedTasks.tbApp
         setSupportActionBar(toolbar)
 
         toolbar.menu.clear()
@@ -52,7 +49,7 @@ class CompletedTasksActivity : AppCompatActivity() {
     }
 
     private fun completedTaskDetails() {
-        completedTaskRecyclerView = binding.recyclerCompletedTasks
+        completedTaskRecyclerView = binding.rvCompletedTasks
         completedTaskRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         completedTasksAdapter = CompletedTaskAdapter()
@@ -60,12 +57,12 @@ class CompletedTasksActivity : AppCompatActivity() {
 
         val dao = TaskDatabase.getDatabase(applicationContext).taskDao()
         val repository = TaskRepository(dao)
-        addTaskViewModel = ViewModelProvider(
+        taskViewModel = ViewModelProvider(
             this,
             AddTaskViewModelFactory(repository)
-        )[AddTaskViewModel::class.java]
+        )[TaskViewModel::class.java]
 
-        addTaskViewModel.getCompletedTasks().observe(this, Observer { tasks ->
+        taskViewModel.getCompletedTasks().observe(this, Observer { tasks ->
             tasks?.let {
                 completedTasksAdapter.setCompletedTasks(it)
             }

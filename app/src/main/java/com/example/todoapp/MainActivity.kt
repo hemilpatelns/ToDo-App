@@ -18,19 +18,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val toolbar: Toolbar = binding.toolbarMain.appToolbar
+        val toolbar: Toolbar = binding.tbLogin.tbApp
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
         toolbar.menu.clear()
 
         // Login on click event
-        binding.loginBtn.setOnClickListener {
+        binding.btnLogin.setOnClickListener {
             authenticateUser()
         }
     }
 
     private fun authenticateUser() {
-        if (binding.emailEditText.text.toString() == Authentication.email && binding.passwordEditText.text.toString() == Authentication.password) {
+        if (binding.etEmail.text.toString() == Authentication.email && binding.etPassword.text.toString() == Authentication.password) {
             Toast.makeText(this,"Authentication Success", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, TasksActivity::class.java)
             startActivity(intent)
