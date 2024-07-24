@@ -88,7 +88,7 @@ class TasksActivity : AppCompatActivity(), TaskActionListener {
     private fun taskDetails() {
         tasksRecyclerView = binding.rvAllTasks
         tasksRecyclerView.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            LinearLayoutManager(this)
         allTasksAdapter = AllTasksAdapter(this)
         tasksRecyclerView.adapter = allTasksAdapter
 
@@ -96,14 +96,18 @@ class TasksActivity : AppCompatActivity(), TaskActionListener {
         val repository = TaskRepository(dao)
         taskViewModel = ViewModelProvider(
             this,
-            AddTaskViewModelFactory(repository)
+            TaskViewModelFactory(repository)
         )[TaskViewModel::class.java]
 
-        taskViewModel.getTasks().observe(this, Observer { tasks ->
-            tasks?.let {
-                allTasksAdapter.setTasks(it)
-            }
-        })
+//        taskViewModel.getTasks().observe(this, Observer { tasks ->
+//            tasks?.let {
+//                allTasksAdapter.setTasks(it)
+//            }
+//        })
+
+        taskViewModel.getTasks().observe(this){
+            allTasksAdapter.setTasks(it)
+        }
     }
 
     override fun onEditClick(task: Task) {

@@ -34,7 +34,7 @@ class EditTaskActivity : AppCompatActivity() {
         val repository = TaskRepository(dao)
         taskViewModel = ViewModelProvider(
             this,
-            AddTaskViewModelFactory(repository)
+            TaskViewModelFactory(repository)
         )[TaskViewModel::class.java]
 
         taskId = intent.getIntExtra("id", 0)

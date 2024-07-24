@@ -25,7 +25,7 @@ class AddTaskActivity : AppCompatActivity() {
         val repository = TaskRepository(dao)
         taskViewModel = ViewModelProvider(
             this,
-            AddTaskViewModelFactory(repository)
+            TaskViewModelFactory(repository)
         )[TaskViewModel::class.java]
 
         binding.btnAdd.setOnClickListener {

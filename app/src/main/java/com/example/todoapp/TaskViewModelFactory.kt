@@ -3,7 +3,7 @@ package com.example.todoapp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
-class AddTaskViewModelFactory(private val taskRepository: TaskRepository): ViewModelProvider.Factory {
+class TaskViewModelFactory(private val taskRepository: TaskRepository): ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(TaskViewModel::class.java)) {

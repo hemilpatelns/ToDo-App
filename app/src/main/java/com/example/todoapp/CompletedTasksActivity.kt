@@ -1,6 +1,8 @@
 package com.example.todoapp
 
 import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
@@ -17,17 +19,12 @@ class CompletedTasksActivity : AppCompatActivity() {
 
     private lateinit var completedTaskRecyclerView: RecyclerView
     private lateinit var taskViewModel: TaskViewModel
-    private lateinit var completedTasksAdapter: CompletedTaskAdapter
+    private lateinit var completedTasksAdapter: AllTasksAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        enableEdgeToEdge()
+
         setContentView(binding.root)
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-//            insets
-//        }
 
         completedTaskToolbar()
 
@@ -52,20 +49,42 @@ class CompletedTasksActivity : AppCompatActivity() {
         completedTaskRecyclerView = binding.rvCompletedTasks
         completedTaskRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        completedTasksAdapter = CompletedTaskAdapter()
+        completedTasksAdapter = AllTasksAdapter(listener = object : TaskActionListener{
+            override fun onEditClick(task: Task) {
+
+            }
+
+            override fun onDeleteClick(task: Task) {
+                AlertDialog.Builder(this@CompletedTasksActivity).apply {
+                    setTitle("Delete Task")
+                    setMessage("Are you sure?")
+                    setPositiveButton("Yes") { _, _ ->
+                        taskViewModel.deleteTask(task)
+                        Toast.makeText(this@CompletedTasksActivity, "Task Deleted", Toast.LENGTH_SHORT).show()
+                    }
+                    setNegativeButton("No") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    setCancelable(false)
+                }.show()
+            }
+
+            override fun onCompleteClick(task: Task) {
+
+            }
+
+        })
         completedTaskRecyclerView.adapter = completedTasksAdapter
 
         val dao = TaskDatabase.getDatabase(applicationContext).taskDao()
         val repository = TaskRepository(dao)
         taskViewModel = ViewModelProvider(
             this,
-            AddTaskViewModelFactory(repository)
+            TaskViewModelFactory(repository)
         )[TaskViewModel::class.java]
 
-        taskViewModel.getCompletedTasks().observe(this, Observer { tasks ->
-            tasks?.let {
-                completedTasksAdapter.setCompletedTasks(it)
-            }
-        })
+        taskViewModel.getCompletedTasks().observe(this){
+            completedTasksAdapter.setTasks(it)
+        }
     }
 }

@@ -18,7 +18,7 @@ interface TaskActionListener {
 
 class AllTasksAdapter(private val listener: TaskActionListener) :
     RecyclerView.Adapter<AllTasksAdapter.TaskViewHolder>() {
-    private var tasks: List<Task> = emptyList()
+//    private var tasks: List<Task> = emptyList()
 
     class TaskViewHolder(itemView: View) : ViewHolder(itemView) {
         val bind = LayoutCurrentTasksBinding.bind(itemView)
@@ -31,29 +31,33 @@ class AllTasksAdapter(private val listener: TaskActionListener) :
     }
 
     override fun getItemCount(): Int {
-        return tasks.size
+        return taskDifferList.currentList.size
     }
+
+//    fun setTasks(tasks: List<Task>) {
+//        this.tasks = tasks
+//        notifyDataSetChanged()
+//    }
 
     fun setTasks(tasks: List<Task>) {
-        this.tasks = tasks
-        notifyDataSetChanged()
+        this.taskDifferList.submitList(tasks)
     }
 
-//    private val taskDiffCallback = object : DiffUtil.ItemCallback<Task>() {
-//        override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
-//            return oldItem.id == newItem.id
-//        }
-//
-//        override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
-//            return oldItem == newItem
-//        }
-//
-//    }
-//
-//    val taskDifferList = AsyncListDiffer(this, taskDiffCallback)
+    private val taskDiffCallback = object : DiffUtil.ItemCallback<Task>() {
+        override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
+            return oldItem == newItem
+        }
+
+    }
+
+    private val taskDifferList = AsyncListDiffer(this, taskDiffCallback)
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        val task = tasks[position]
+        val task = taskDifferList.currentList[position]
         holder.bind.tvTaskTitle.text = task.taskTitle
         holder.bind.tvTaskSubtitle.text = task.taskSubtitle
 
