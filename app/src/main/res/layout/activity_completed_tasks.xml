@@ -5,7 +5,7 @@
     android:id="@+id/cdlCompletedTasks"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CompletedTasksActivity">
+    tools:context=".view.CompletedTasksActivity">
 
     <include
         android:id="@+id/tbCompletedTasks"

@@ -1,4 +1,4 @@
-package com.example.todoapp
+package com.example.todoapp.view
 
 import android.app.DatePickerDialog
 import android.content.Intent
@@ -10,11 +10,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.todoapp.R
+import com.example.todoapp.model.Task
+import com.example.todoapp.database.TaskDatabase
+import com.example.todoapp.repository.TaskRepository
+import com.example.todoapp.viewmodel.TaskViewModel
+import com.example.todoapp.viewmodel.TaskViewModelFactory
 import com.example.todoapp.databinding.ActivityTasksBinding
+import com.example.todoapp.view.adapter.AllTasksAdapter
+import com.example.todoapp.view.adapter.TaskActionListener
 
 class TasksActivity : AppCompatActivity(), TaskActionListener {
 
@@ -29,23 +36,10 @@ class TasksActivity : AppCompatActivity(), TaskActionListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        val toolbar: Toolbar = binding.tbTask.tbApp
-        setSupportActionBar(toolbar)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(false)
-
+        allTasksToolbar()
         taskDetails()
-
-        binding.fabAddTask.setOnClickListener {
-            val intent = Intent(this, AddTaskActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.opCompletedTasks.setOnClickListener {
-            val intent = Intent(this, CompletedTasksActivity::class.java)
-            startActivity(intent)
-        }
-
+        clickEvents()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -85,6 +79,13 @@ class TasksActivity : AppCompatActivity(), TaskActionListener {
         datePickerDialog.show()
     }
 
+    private fun allTasksToolbar(){
+        val toolbar: Toolbar = binding.tbTask.tbApp
+        setSupportActionBar(toolbar)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+    }
+
     private fun taskDetails() {
         tasksRecyclerView = binding.rvAllTasks
         tasksRecyclerView.layoutManager =
@@ -99,14 +100,20 @@ class TasksActivity : AppCompatActivity(), TaskActionListener {
             TaskViewModelFactory(repository)
         )[TaskViewModel::class.java]
 
-//        taskViewModel.getTasks().observe(this, Observer { tasks ->
-//            tasks?.let {
-//                allTasksAdapter.setTasks(it)
-//            }
-//        })
-
-        taskViewModel.getTasks().observe(this){
+        taskViewModel.getTasks().observe(this) {
             allTasksAdapter.setTasks(it)
+        }
+    }
+
+    private fun clickEvents() {
+        binding.fabAddTask.setOnClickListener {
+            val intent = Intent(this, AddTaskActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.opCompletedTasks.setOnClickListener {
+            val intent = Intent(this, CompletedTasksActivity::class.java)
+            startActivity(intent)
         }
     }
 

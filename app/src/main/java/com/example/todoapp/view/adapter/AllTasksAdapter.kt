@@ -1,4 +1,4 @@
-package com.example.todoapp
+package com.example.todoapp.view.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.example.todoapp.R
+import com.example.todoapp.model.Task
 import com.example.todoapp.databinding.LayoutCurrentTasksBinding
 
 interface TaskActionListener {
@@ -51,7 +53,6 @@ class AllTasksAdapter(private val listener: TaskActionListener) :
         override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
             return oldItem == newItem
         }
-
     }
 
     private val taskDifferList = AsyncListDiffer(this, taskDiffCallback)

@@ -13,19 +13,19 @@
         android:theme="@style/Theme.ToDoApp"
         tools:targetApi="31">
         <activity
-            android:name=".EditTaskActivity"
+            android:name=".view.EditTaskActivity"
             android:exported="false" />
         <activity
-            android:name=".CompletedTasksActivity"
+            android:name=".view.CompletedTasksActivity"
             android:exported="false" />
         <activity
-            android:name=".AddTaskActivity"
+            android:name=".view.AddTaskActivity"
             android:exported="false" />
         <activity
-            android:name=".TasksActivity"
+            android:name=".view.TasksActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

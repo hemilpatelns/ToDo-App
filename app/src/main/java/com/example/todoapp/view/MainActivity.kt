@@ -1,8 +1,7 @@
-package com.example.todoapp
+package com.example.todoapp.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -18,15 +17,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        loginToolbar()
+        binding.btnLogin.setOnClickListener {
+            authenticateUser()
+        }
+    }
+
+    private fun loginToolbar(){
         val toolbar: Toolbar = binding.tbLogin.tbApp
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
         toolbar.menu.clear()
-
-        // Login on click event
-        binding.btnLogin.setOnClickListener {
-            authenticateUser()
-        }
     }
 
     private fun authenticateUser() {

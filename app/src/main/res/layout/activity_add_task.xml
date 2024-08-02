@@ -5,7 +5,7 @@
     android:id="@+id/cdlAddTask"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddTaskActivity">
+    tools:context=".view.AddTaskActivity">
 
     <include
         android:id="@+id/tbAddTask"

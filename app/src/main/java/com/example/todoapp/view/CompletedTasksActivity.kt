@@ -1,14 +1,20 @@
-package com.example.todoapp
+package com.example.todoapp.view
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.todoapp.view.adapter.AllTasksAdapter
+import com.example.todoapp.model.Task
+import com.example.todoapp.view.adapter.TaskActionListener
+import com.example.todoapp.database.TaskDatabase
+import com.example.todoapp.repository.TaskRepository
+import com.example.todoapp.viewmodel.TaskViewModel
+import com.example.todoapp.viewmodel.TaskViewModelFactory
 import com.example.todoapp.databinding.ActivityCompletedTasksBinding
 
 class CompletedTasksActivity : AppCompatActivity() {
@@ -26,22 +32,17 @@ class CompletedTasksActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        completedTaskToolbar()
-
+        completedTasksToolbar()
         completedTaskDetails()
-
     }
 
-    private fun completedTaskToolbar(){
+    private fun completedTasksToolbar(){
         val toolbar: Toolbar = binding.tbCompletedTasks.tbApp
         setSupportActionBar(toolbar)
-
         toolbar.menu.clear()
-
         toolbar.setNavigationOnClickListener {
             finish()
         }
-
         toolbar.title = "Completed Tasks"
     }
 
@@ -49,7 +50,7 @@ class CompletedTasksActivity : AppCompatActivity() {
         completedTaskRecyclerView = binding.rvCompletedTasks
         completedTaskRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        completedTasksAdapter = AllTasksAdapter(listener = object : TaskActionListener{
+        completedTasksAdapter = AllTasksAdapter(listener = object : TaskActionListener {
             override fun onEditClick(task: Task) {
 
             }
